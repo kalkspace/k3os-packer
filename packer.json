@@ -1,6 +1,8 @@
 {
   "variables": {
-    "k3os_version": "v0.11.1"
+    "k3os_version": "v0.11.1",
+    "git_ref": "local",
+    "git_sha": "local"
   },
   "builders": [
     {
@@ -10,6 +12,10 @@
       "location": "nbg1",
       "server_type": "cx11",
       "snapshot_name": "k3os-packer-{{ timestamp }}",
+      "snapshot_labels": {
+        "git_ref": "{{ user `git_ref` }}",
+        "git_sha": "{{ user `git_sha` }}"
+      },
       "ssh_username": "root"
     }
   ],

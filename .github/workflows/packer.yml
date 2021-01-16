@@ -16,6 +16,6 @@ jobs:
       - name: Run Packer
         uses: docker://hashicorp/packer:1.6.6
         with:
-          args: build packer.json
+          args: build -var git_ref=${{ github.ref }} -var git_sha=${{ github.sha }} packer.json
         env:
           HCLOUD_TOKEN: ${{ secrets.HCLOUD_TOKEN }}
