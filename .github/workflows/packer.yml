@@ -2,19 +2,11 @@ on:
   push:
 
 jobs:
-  debug:
-    runs-on: ubuntu-20.04
-    steps:
-      - name: Dump GitHub context
-        env:
-          GITHUB_CONTEXT: ${{ toJson(github) }}
-        run: echo "$GITHUB_CONTEXT"
-
   build:
     name: Build k3os image
     runs-on: ubuntu-20.04
     # don't run for forks
-    if: github.event.push.repository.full_name == github.repository
+    if: github.event.repository.full_name == github.repository
 
     steps:
       - name: Checkout Repository
