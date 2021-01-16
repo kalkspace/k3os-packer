@@ -1,0 +1,51 @@
+{
+  "variables": {
+    "k3os_version": "v0.11.1"
+  },
+  "builders": [
+    {
+      "name": "k3os-hetzner",
+      "type": "hcloud",
+      "image": "ubuntu-20.04",
+      "location": "nbg1",
+      "server_type": "cx11",
+      "snapshot_name": "k3os-packer-{{ timestamp }}",
+      "ssh_username": "root"
+    }
+  ],
+  "provisioners": [
+    {
+      "type": "file",
+      "source": "config-provision.yaml",
+      "destination": "/tmp/config.yaml"
+    },
+    {
+      "type": "shell",
+      "inline": [
+        "#!/bin/sh -x",
+        "curl -L https://raw.githubusercontent.com/rancher/k3os/master/install.sh -o ./k3os-install.sh",
+        "chmod +x ./k3os-install.sh",
+        "./k3os-install.sh --takeover --debug --tty ttyS0 --config /tmp/config.yaml --no-format /dev/sda1 https://github.com/rancher/k3os/releases/download/{{ user `k3os_version` }}/k3os-amd64.iso",
+        "cp ~/.ssh/authorized_keys /k3os/system/packer_ssh_key.pub",
+        "reboot"
+      ],
+      "expect_disconnect": true
+    },
+    {
+      "type": "file",
+      "source": "config.yaml",
+      "destination": "/k3os/system/config.yaml"
+    },
+    {
+      "type": "shell",
+      "inline": [
+        "passwd -l root",
+        "rm /root/.ssh/authorized_keys",
+        "rm /k3os/system/packer_ssh_key.pub",
+        "service k3s-service stop",
+        "rm -r /var/lib/rancher/k3s/server/tls/*",
+        "echo 'K3OS was bootstrapped!'"
+      ]
+    }
+  ]
+}

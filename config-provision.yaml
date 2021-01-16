@@ -1,0 +1,20 @@
+# K3OS config used while provisioning via Packer
+
+boot_cmd:
+  # place packer ssh pubkey
+  - "mkdir -p /root/.ssh"
+  - "cat /k3os/system/packer_ssh_key.pub > /root/.ssh/authorized_keys"
+  # allow root login (those spaces are important)
+  - "sed -i 's/PermitRootLogin         no/PermitRootLogin yes/g' /etc/ssh/sshd_config"
+  # unlock root user
+  - "passwd -u root"
+  # allow executing scripts in /tmp
+  - "mount -o remount,exec /tmp"
+  # allow overwriting config
+  - "mount -o remount,rw /k3os/system"
+
+k3os:
+  data_sources:
+    - hetzner
+    - openstack
+    - cdrom

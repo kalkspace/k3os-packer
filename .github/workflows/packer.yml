@@ -1,0 +1,19 @@
+on:
+  push:
+
+jobs:
+  build:
+    runs-on: ubuntu-20.04
+    # don't run for forks
+    if: github.event.pull_request.head.repo.full_name == github.repository
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Run Packer
+        uses: santisaez/packer-action@v1
+        with:
+          template: packer.json
+        env:
+          HCLOUD_TOKEN: ${{ secrets.HCLOUD_TOKEN }}

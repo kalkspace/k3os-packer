@@ -1,0 +1,10 @@
+# K3OS config for production
+
+ssh_authorized_keys:
+  - github:mraerino
+
+k3os:
+  data_sources:
+    - hetzner
+    - openstack
+    - cdrom
