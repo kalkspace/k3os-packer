@@ -19,4 +19,5 @@ jobs:
           args: build packer.pkr.hcl
         env:
           HCLOUD_TOKEN: ${{ secrets.HCLOUD_TOKEN }}
-          PKR_VAR_labels: '{ git_ref = "${{ github.ref }}", git_sha = "${{ github.sha }}" }'
+          PKR_VAR_git_ref: "${{ github.ref }}"
+          PKR_VAR_git_sha: "${{ github.sha }}"

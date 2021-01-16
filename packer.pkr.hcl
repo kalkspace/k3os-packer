@@ -3,11 +3,14 @@ variable "k3os_version" {
   default = "v0.11.1"
 }
 
-variable "labels" {
-  type = map(string)
-  default = {
-    build = "local"
-  }
+variable "git_ref" {
+  type = string
+  default = "local"
+}
+
+variable "git_sha" {
+  type = string
+  default = "local"
 }
 
 source "hcloud" "k3os-hetzner" {
@@ -15,7 +18,10 @@ source "hcloud" "k3os-hetzner" {
   location        = "nbg1"
   server_type     = "cx11"
   snapshot_name   = "k3os-packer-${var.k3os_version}-${formatdate("YYYYMMDD-hhmmss", timestamp())}"
-  snapshot_labels = var.labels
+  snapshot_labels = {
+    git_ref = replace(var.git_ref, "/", "-")
+    git_sha = var.git_sha
+  }
   ssh_username    = "root"
 }
 
