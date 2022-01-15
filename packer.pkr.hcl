@@ -1,6 +1,6 @@
 variable "k3os_version" {
   type    = string
-  default = "v0.20.4-k3s1r0"
+  default = "v0.21.5-k3s2r1"
 }
 
 variable "git_ref" {
