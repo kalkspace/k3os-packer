@@ -24,3 +24,7 @@ If there is an issue with the packer flow you can debug it locally:
 export HCLOUD_TOKEN="<api key>"
 packer build -debug packer.json
 ```
+
+### Adding a new node
+
+Add a new server using the generated snapshot image in the hetzner cloud console and specify the `new-node-template.yaml` as userdata. As the token use the content of `/var/lib/rancher/k3s/server/node-token` from the primary node.
