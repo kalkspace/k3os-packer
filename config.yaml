@@ -1,10 +1,19 @@
 # K3OS config for production
 
 ssh_authorized_keys:
+  - github:ansgarprause
+  - github:buecherwurmmm
+  - github:christinegotth
+  - github:haralk
   - github:mraerino
+  - github:m0ppers
 
 k3os:
   data_sources:
     - hetzner
     - openstack
     - cdrom
+  k3s_args:
+    - agent
+    - "--kubelet-arg='--authentication-token-webhook=true'"
+    - "--kubelet-arg='--authorization-mode=Webhook,Node,RBAC'"
