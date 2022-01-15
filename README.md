@@ -10,7 +10,7 @@ The installation is configured via `config.yaml` - see [configuration options](h
 
 ### Upgrading
 
-To upgrade the k3os release being used, change `variables.k3os_version` in `packer.json`.
+To upgrade the k3os release being used, change `variables.k3os_version` in `packer.pkr.hcl`.
 
 ### Building images
 
