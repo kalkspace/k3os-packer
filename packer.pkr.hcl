@@ -4,25 +4,25 @@ variable "k3os_version" {
 }
 
 variable "git_ref" {
-  type = string
+  type    = string
   default = "local"
 }
 
 variable "git_sha" {
-  type = string
+  type    = string
   default = "local"
 }
 
 source "hcloud" "k3os-hetzner" {
-  image           = "ubuntu-20.04"
-  location        = "nbg1"
-  server_type     = "cx11"
-  snapshot_name   = "k3os-packer-${var.k3os_version}-${formatdate("YYYYMMDD-hhmmss", timestamp())}"
+  image         = "ubuntu-20.04"
+  location      = "nbg1"
+  server_type   = "cx11"
+  snapshot_name = "k3os-packer-${var.k3os_version}-${formatdate("YYYYMMDD-hhmmss", timestamp())}"
   snapshot_labels = {
     git_ref = replace(var.git_ref, "/", "-")
     git_sha = var.git_sha
   }
-  ssh_username    = "root"
+  ssh_username = "root"
 }
 
 build {
