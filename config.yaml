@@ -16,4 +16,4 @@ k3os:
   k3s_args:
     - agent
     - "--kubelet-arg=authentication-token-webhook=true"
-    - "--kubelet-arg=authorization-mode=Webhook,Node,RBAC"
+    - "--kubelet-arg=authorization-mode=Webhook"
